@@ -58,6 +58,7 @@ class URLsPlugin(object):
             
             content_type = f.info()['content-type']
             if not (('text/html' in content_type) or ('text/xhtml' in content_type)):
+                save_url(cardinal.config['urls'].LINKS_FILE, url, user.group(1))
                 return
             content = f.read(read_bytes)
             f.close()
@@ -74,9 +75,27 @@ class URLsPlugin(object):
                     title_to_send = title[:200] if len(title) >= 200 else title
                     
                     cardinal.sendMsg(channel, "URL Found: %s" % title_to_send)
+                    save_url(cardinal.config['urls'].LINKS_FILE, url, user.group(1), title_to_send)
                     continue
+
+            save_url(cardinal.config['urls'].LINKS_FILE, url, user.group(1))
 
     get_title.regex = URL_REGEX
 
 def setup():
     return URLsPlugin()
+
+def save_url(url_file, url, user=None, title=None):
+    f = open(url_file, 'a')
+
+    line_to_write = "{} | {}".format(
+            datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),
+            url,
+        )
+    if title:
+        line_to_write += " | {}".format(title)
+    if user:
+        line_to_write += " | Mentioned by: {}".format(user)
+
+    f.write("{}\n".format(line_to_write))
+    f.close()

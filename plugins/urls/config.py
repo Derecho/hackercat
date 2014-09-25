@@ -9,3 +9,5 @@ READ_BYTES = 512 * 1024
 # This is the time (in seconds) between looking up the same title again. This
 # is an anti-spam measure.
 LOOKUP_COOLOFF = 18
+
+LINKS_FILE = "/home/derecho/public_html/irclinks.txt"
