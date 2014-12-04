@@ -36,7 +36,7 @@ https://github.com/JohnMaguire/Cardinal
 
     # Define the config spec and create a parser for our internal config
     spec = ConfigSpec()
-    spec.add_option('nickname', basestring, 'hackercat-ng')
+    spec.add_option('nickname', basestring, 'hackercat')
     spec.add_option('password', basestring, None)
     spec.add_option('network', basestring, 'irc.freenode.net')
     spec.add_option('port', int, 6697)
